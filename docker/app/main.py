@@ -1,21 +1,27 @@
 from typing import Union
-
 from fastapi import FastAPI
+from pydantic import BaseModel
+from scripts.band import *
 
 app = FastAPI()
 
-@app.get("/check")
-def read_root():
-    return "All Ok"
+class BANDInput(BaseModel):
+    species: list[str]
+    coordinates: list[list[float]]
+    bond_connectivity_list: list[list[int]]
 
-@app.get("/creator")
+@app.get("/")
+def read_root():
+    return "Hello World"
+
+@app.get("/creator") 
 def read_item():
     return "Archit Jain & Pulkit Gupta"
 
 @app.post("/predictEnergy")
-def predictEnergy():
-    return "Predicted Energy"
+def predictEnergy(data: BANDInput):
+    return predict_energy_wrapper(data)
 
 @app.post("/geometricOptimization")
-def geometricOptimization():
-    return "Optimized Geometry"
+def geometricOptimization(data: BANDInput):
+    return geometricOptimization_wrapper(data)
