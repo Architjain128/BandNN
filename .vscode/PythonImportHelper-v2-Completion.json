@@ -1,0 +1,378 @@
+[
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "Sequential",
+        "importPath": "keras.models",
+        "description": "keras.models",
+        "isExtraImport": true,
+        "detail": "keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "Model",
+        "importPath": "keras.models",
+        "description": "keras.models",
+        "isExtraImport": true,
+        "detail": "keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "Dense",
+        "importPath": "keras.layers",
+        "description": "keras.layers",
+        "isExtraImport": true,
+        "detail": "keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Activation",
+        "importPath": "keras.layers",
+        "description": "keras.layers",
+        "isExtraImport": true,
+        "detail": "keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "Input",
+        "importPath": "keras.layers",
+        "description": "keras.layers",
+        "isExtraImport": true,
+        "detail": "keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "scipy.optimize",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy.optimize",
+        "description": "scipy.optimize",
+        "detail": "scipy.optimize",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "predictor",
+        "description": "predictor",
+        "isExtraImport": true,
+        "detail": "predictor",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "xyz_to_zmat",
+        "description": "xyz_to_zmat",
+        "isExtraImport": true,
+        "detail": "xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "models",
+        "description": "models",
+        "isExtraImport": true,
+        "detail": "models",
+        "documentation": {}
+    },
+    {
+        "label": "*",
+        "importPath": "featurizer",
+        "description": "featurizer",
+        "isExtraImport": true,
+        "detail": "featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "Union",
+        "importPath": "typing",
+        "description": "typing",
+        "isExtraImport": true,
+        "detail": "typing",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "get_features",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def get_features(conformer,S,bond_connectivity_list):\n    conformer=np.array(conformer)\n    nonbondcutoff = 6\n    bonds = generate_bondconnectivty_matrix(bond_connectivity_list)\n    #Calculate the atomic environment vector for each atom\n    atomic_envs = generate_atomic_env(bonds, S)\n    #Calculate the sets of bonds and bond values\n    bondlist, bonddistances = generate_bond_data(conformer, bonds)\n    bondfeatures = generate_bond_features(bonddistances,bondlist,atomic_envs)\n    #Calculate the 3 atom angle sets and angle values",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_bondconnectivty_matrix",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_bondconnectivty_matrix(bond_connectivity_list):\n    bond_matrix = [[0 for i in range(len(bond_connectivity_list))] for j in range(len(bond_connectivity_list))]\n    for i1 in range(len(bond_connectivity_list)):\n        for i2 in bond_connectivity_list[i1]:\n            bond_matrix[i1][i2] = 1\n            bond_matrix[i2][i1] = 1\n    return bond_matrix\ndef generate_atomic_env(bonds, S):\n    atomic_envs = []\n    for i in range(len(bonds)):",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_atomic_env",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_atomic_env(bonds, S):\n    atomic_envs = []\n    for i in range(len(bonds)):\n        atom_id = {'H':0, 'C':1, 'O':2, 'N':3 }\n        atomtype = [0,0,0,0]\n        atomtype[atom_id[S[i]]]  = 1 \n        immediate_neighbour_count = [0,0,0,0]\n        for j in range(len(bonds[i])):\n            if(bonds[i][j] > 0):\n                immediate_neighbour_count[atom_id[S[j]]] += 1",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_bond_data",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_bond_data(conformer,bonds):\n    #Calculate the paiwise-distances among the atoms\n    distance = [[0 for i in range(len(conformer))] for j in range(len(conformer))]\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            distance[i][j] = np.linalg.norm(conformer[i]-conformer[j])\n    bondlist = []\n    bonddistances = []\n    for i in range(len(bonds)):\n        for j in range(i):",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_bond_features",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_bond_features(bonddistances, bondlist, atomtype):\n    labels = []\n    for bond in range(len(bondlist)):\n        bond_feature = []\n        if(atomtype[bondlist[bond][0]] > atomtype[bondlist[bond][1]]):\n            bond_feature += atomtype[bondlist[bond][0]] + atomtype[bondlist[bond][1]]\n        else:\n            bond_feature += atomtype[bondlist[bond][1]] + atomtype[bondlist[bond][0]]\n        bond_feature.append(bonddistances[bond])\n        labels.append(bond_feature)",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_angle_data",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_angle_data(conformer,bonds):\n    angles_list = []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            for k in range(len(conformer)):\n                if(j!=i and j!=k and i>k and bonds[i][j]!=0 and bonds[j][k]!=0):\n                    angles_list.append([i,j,k])\n    angles = []\n    for angle_triplet in angles_list:\n        angle = get_angle(conformer[angle_triplet[0]], conformer[angle_triplet[1]], conformer[angle_triplet[2]])",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_angle",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def get_angle(coor1,coor2,coor3):\n    ba =coor1 - coor2   \n    bc = coor3 - coor2 \n    cosine_angle = np.dot(ba, bc) / (np.linalg.norm(ba) * np.linalg.norm(bc))\n    if cosine_angle > 1.0:\n        cosine_angle=1.0\n    elif cosine_angle < -1.0:\n        cosine_angle=-1.0\n    if cosine_angle <=1.0 and cosine_angle>=-1.0:\n        angle = np.arccos(cosine_angle)",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_angle_features",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_angle_features(angles, angletype, atomtype,bondlist,bonddistances):\n    labels = []\n    for angle in range(len(angletype)):\n        anglefeature = []\n        if(atomtype[angletype[angle][0]] > atomtype[angletype[angle][2]]):\n            anglefeature += atomtype[angletype[angle][0]] + atomtype[angletype[angle][2]]\n            bondlen1 = get_bondlen(angletype[angle][0],angletype[angle][1],bondlist,bonddistances)\n            bondlen2 = get_bondlen(angletype[angle][1],angletype[angle][2],bondlist,bonddistances)\n        else:\n            anglefeature += atomtype[angletype[angle][2]] + atomtype[angletype[angle][0]]",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_bondlen",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def get_bondlen(i1,i2,bondtypelist,bondlenlist):\n    try:\n        index = bondtypelist.index([i1,i2])\n    except:\n        index = bondtypelist.index([i2,i1])\n    return bondlenlist[index]\ndef generate_nonbond_data(conformer,bonds,nonbondcutoff):\n    #Calculate the paiwise-distances among the atoms\n    distance = [[0 for i in range(len(conformer))] for j in range(len(conformer))]\n    for i in range(len(conformer)):",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_nonbond_data",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_nonbond_data(conformer,bonds,nonbondcutoff):\n    #Calculate the paiwise-distances among the atoms\n    distance = [[0 for i in range(len(conformer))] for j in range(len(conformer))]\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            distance[i][j] = np.linalg.norm(conformer[i]-conformer[j])\n    nonbond_distances = []\n    nonbond_list = []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_dihedral_data",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_dihedral_data(conformer,bonds):\n    dihedral_list= []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            for k in range(len(conformer)):\n                for l in range(len(conformer)):\n                    if( i>l and i!=j and i!=k and j!=k and j!=l and k!=l and bonds[i][j] == 1 and bonds[j][k]==1 and bonds[k][l]==1):\n                        dihedral_list.append([i,j,k,l])\n    dihedrals = []\n    for dihed in dihedral_list:",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_dihedral",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def get_dihedral(p0, p1, p2, p3):\n    b0=p0-p1\n    b1=p2-p1\n    b2=p3-p2\n    b0xb1 = np.cross(b0,b1)\n    b1xb2 = np.cross(b2,b1)\n    b0xb1_x_b1xb2 = np.cross(b0xb1,b1xb2)\n    y = np.dot(b0xb1_x_b1xb2, b1)*(1.0/np.linalg.norm(b1))\n    x = np.dot(b0xb1, b1xb2)\n    return np.arctan2(y, x)",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_angleval",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def get_angleval(i1,i2,i3,angletypelist,anglevallist):\n    try:\n        index = angletypelist.index([i1,i2,i3])\n    except:\n        index = angletypelist.index([i3,i2,i1])\n    return anglevallist[index]\ndef generate_dihedralangle_features(dihedral_angles, dihedral_list, atomtype,bondtypelist,bondlenlist,angletypelist,anglevallist):\n    labels = []\n    for dihedral in range(len(dihedral_angles)):\n        dihedral_feature = []",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_dihedralangle_features",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.featurizer",
+        "description": "BAND-NN.scripts.featurizer",
+        "peekOfCode": "def generate_dihedralangle_features(dihedral_angles, dihedral_list, atomtype,bondtypelist,bondlenlist,angletypelist,anglevallist):\n    labels = []\n    for dihedral in range(len(dihedral_angles)):\n        dihedral_feature = []\n        if(atomtype[dihedral_list[dihedral][0]] > atomtype[dihedral_list[dihedral][3]]):\n            index1 = 0\n            index2 = 1\n            index3 = 2\n            index4 = 3\n        else:",
+        "detail": "BAND-NN.scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_bonds_model",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.models",
+        "description": "BAND-NN.scripts.models",
+        "peekOfCode": "def get_bonds_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=17))\n    model.add(Dense(256, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model\ndef get_angles_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=27))",
+        "detail": "BAND-NN.scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_angles_model",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.models",
+        "description": "BAND-NN.scripts.models",
+        "peekOfCode": "def get_angles_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=27))\n    model.add(Dense(350, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model\ndef get_nonbonds_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=17))",
+        "detail": "BAND-NN.scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_nonbonds_model",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.models",
+        "description": "BAND-NN.scripts.models",
+        "peekOfCode": "def get_nonbonds_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=17))\n    model.add(Dense(256, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model\ndef get_dihedrals_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=38))",
+        "detail": "BAND-NN.scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_dihedrals_model",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.models",
+        "description": "BAND-NN.scripts.models",
+        "peekOfCode": "def get_dihedrals_model():\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=38))\n    model.add(Dense(512, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model",
+        "detail": "BAND-NN.scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "optimize",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.optimizer",
+        "description": "BAND-NN.scripts.optimizer",
+        "peekOfCode": "def optimize(coordinates,species,bonds):\n    prediction_model = get_default_prediction_model()\n    zparams,zconnect =  get_zmat_from_coordinates(coordinates)    \n    optim_params = sop.minimize(optimizer_oracle,zparams,method='Nelder-Mead',args=(zconnect,species,bonds,prediction_model))\n    optimized_coordinates = coordinates = get_coordinates_from_zmat(optim_params['x'],zconnect)\n    optimized_energy = optim_params['fun']\n    return optimized_coordinates, optimized_energy\ndef optimizer_oracle(zparams,zconnect,species,bonds,prediction_model):\n    coordinates=get_coordinates_from_zmat(zparams, zconnect)\n    energy = predict_energy(prediction_model,coordinates,species,bonds)",
+        "detail": "BAND-NN.scripts.optimizer",
+        "documentation": {}
+    },
+    {
+        "label": "optimizer_oracle",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.optimizer",
+        "description": "BAND-NN.scripts.optimizer",
+        "peekOfCode": "def optimizer_oracle(zparams,zconnect,species,bonds,prediction_model):\n    coordinates=get_coordinates_from_zmat(zparams, zconnect)\n    energy = predict_energy(prediction_model,coordinates,species,bonds)\n    return energy",
+        "detail": "BAND-NN.scripts.optimizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_default_prediction_model",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.predictor",
+        "description": "BAND-NN.scripts.predictor",
+        "peekOfCode": "def get_default_prediction_model():\n    bonds_model = get_bonds_model()\n    bonds_model.load_weights('../weights/bond_weights.h5')\n    angles_model = get_angles_model()\n    angles_model.load_weights('../weights/angle_weights.h5')\n    nonbonds_model = get_nonbonds_model()\n    nonbonds_model.load_weights('../weights/nonbonds_weights.h5')\n    dihedralangles_model = get_dihedrals_model()\n    dihedralangles_model.load_weights('../weights/dihedral_weights.h5')\n    model = {}",
+        "detail": "BAND-NN.scripts.predictor",
+        "documentation": {}
+    },
+    {
+        "label": "predict_energy",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.predictor",
+        "description": "BAND-NN.scripts.predictor",
+        "peekOfCode": "def predict_energy(model,coordinates,species,bonds):\n    features = get_features(coordinates, species, bonds)\n    bond_energies = model['bonds'].predict(features['bonds'])\n    angle_energies = model['angles'].predict(features['angles'])\n    nonbond_energies = model['nonbonds'].predict(features['nonbonds'])\n    dihedral_energies = model['dihedrals'].predict(features['dihedrals'])\n    energy = -1*(np.sum(bond_energies) + np.sum(angle_energies) + np.sum(nonbond_energies) + np.sum(dihedral_energies))\n    return energy",
+        "detail": "BAND-NN.scripts.predictor",
+        "documentation": {}
+    },
+    {
+        "label": "get_zmat_from_coordinates",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.xyz_to_zmat",
+        "description": "BAND-NN.scripts.xyz_to_zmat",
+        "peekOfCode": "def get_zmat_from_coordinates(xyzarr):\n    xyzarr = np.array(xyzarr)\n    distmat = distance_matrix(xyzarr)\n    zmat = []\n    npart, ncoord = xyzarr.shape\n    rlist = []\n    alist = []\n    dlist = []\n    rconnect = []\n    aconnect = []",
+        "detail": "BAND-NN.scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "get_coordinates_from_zmat",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.xyz_to_zmat",
+        "description": "BAND-NN.scripts.xyz_to_zmat",
+        "peekOfCode": "def get_coordinates_from_zmat(zparams, zconnect):\n    rconnect = zconnect[0]\n    aconnect = zconnect[1]\n    dconnect = zconnect[2]\n    rlist=[]\n    alist=[]\n    dlist=[]\n    zparams = zparams.tolist()\n    for i in range(len(rconnect)):\n        rlist.append(zparams.pop(0))",
+        "detail": "BAND-NN.scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "angle",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.xyz_to_zmat",
+        "description": "BAND-NN.scripts.xyz_to_zmat",
+        "peekOfCode": "def angle(xyzarr, i, j, k):\n    rij = xyzarr[i] - xyzarr[j]\n    rkj = xyzarr[k] - xyzarr[j]\n    cos_theta = np.dot(rij, rkj)\n    sin_theta = np.linalg.norm(np.cross(rij, rkj))\n    theta = np.arctan2(sin_theta, cos_theta)\n    return theta\ndef dihedral(xyzarr, i, j, k, l):\n    rji = xyzarr[j] - xyzarr[i]\n    rkj = xyzarr[k] - xyzarr[j]",
+        "detail": "BAND-NN.scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "dihedral",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.xyz_to_zmat",
+        "description": "BAND-NN.scripts.xyz_to_zmat",
+        "peekOfCode": "def dihedral(xyzarr, i, j, k, l):\n    rji = xyzarr[j] - xyzarr[i]\n    rkj = xyzarr[k] - xyzarr[j]\n    rlk = xyzarr[l] - xyzarr[k]\n    v1 = np.cross(rji, rkj)\n    v1 = v1 / np.linalg.norm(v1)\n    v2 = np.cross(rlk, rkj)\n    v2 = v2 / np.linalg.norm(v2)\n    m1 = np.cross(v1, rkj) / np.linalg.norm(rkj)\n    x = np.dot(v1, v2)",
+        "detail": "BAND-NN.scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "distance_matrix",
+        "kind": 2,
+        "importPath": "BAND-NN.scripts.xyz_to_zmat",
+        "description": "BAND-NN.scripts.xyz_to_zmat",
+        "peekOfCode": "def distance_matrix(xyzarr):\n    npart, ncoord = xyzarr.shape\n    dist_mat = np.zeros([npart, npart])\n    for i in range(npart):\n        for j in range(0, i):\n            rvec = xyzarr[i] - xyzarr[j]\n            dist_mat[i][j] = dist_mat[j][i] = np.sqrt(np.dot(rvec, rvec))\n    return dist_mat",
+        "detail": "BAND-NN.scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "read_root",
+        "kind": 2,
+        "importPath": "docker.app.main",
+        "description": "docker.app.main",
+        "peekOfCode": "def read_root():\n    return {\"Hello\": \"World\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: Union[str, None] = None):\n    return {\"item_id\": item_id, \"q\": q}",
+        "detail": "docker.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "read_item",
+        "kind": 2,
+        "importPath": "docker.app.main",
+        "description": "docker.app.main",
+        "peekOfCode": "def read_item(item_id: int, q: Union[str, None] = None):\n    return {\"item_id\": item_id, \"q\": q}",
+        "detail": "docker.app.main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "docker.app.main",
+        "description": "docker.app.main",
+        "peekOfCode": "app = FastAPI()\n@app.get(\"/\")\ndef read_root():\n    return {\"Hello\": \"World\"}\n@app.get(\"/items/{item_id}\")\ndef read_item(item_id: int, q: Union[str, None] = None):\n    return {\"item_id\": item_id, \"q\": q}",
+        "detail": "docker.app.main",
+        "documentation": {}
+    }
+]
