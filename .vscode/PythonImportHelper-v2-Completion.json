@@ -202,6 +202,59 @@
         "documentation": {}
     },
     {
+        "label": "imp",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "imp",
+        "description": "imp",
+        "detail": "imp",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "response",
+        "importPath": "urllib",
+        "description": "urllib",
+        "isExtraImport": true,
+        "detail": "urllib",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
         "label": "Union",
         "importPath": "typing",
         "description": "typing",
@@ -735,6 +788,78 @@
         "description": "docker.app.scripts.xyz_to_zmat",
         "peekOfCode": "def distance_matrix(xyzarr):\n    \"\"\"calculate distance matrix\"\"\"\n    npart = xyzarr.shape[0]\n    dist_mat = np.zeros([npart, npart])\n    for i in range(npart):\n        for j in range(0, i):\n            rvec = xyzarr[i] - xyzarr[j]\n            dist_mat[i][j] = dist_mat[j][i] = np.sqrt(np.dot(rvec, rvec))\n    return dist_mat",
         "detail": "docker.app.scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "test_root",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_api",
+        "description": "docker.app.testFiles.test_api",
+        "peekOfCode": "def test_root():\n    response = requests.get(base_url)\n    assert response.status_code == 200\n    assert response.json() == \"Hello World\"\ndef test_creator():\n    response = requests.get(base_url+\"/creator\")\n    assert response.status_code == 200\n    assert response.json() == \"Archit Jain & Pulkit Gupta\"\ndef test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)",
+        "detail": "docker.app.testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_creator",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_api",
+        "description": "docker.app.testFiles.test_api",
+        "peekOfCode": "def test_creator():\n    response = requests.get(base_url+\"/creator\")\n    assert response.status_code == 200\n    assert response.json() == \"Archit Jain & Pulkit Gupta\"\ndef test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {",
+        "detail": "docker.app.testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_energy_prediction",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_api",
+        "description": "docker.app.testFiles.test_api",
+        "peekOfCode": "def test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {\n        'optimized_coordinates': [\n            [ 0.        ,  0.        ,  0.        ],\n            [ 1.19854484,  0.        ,  0.        ],\n            [-0.52919798,  0.9044144 ,  0.        ],",
+        "detail": "docker.app.testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_geometry_optimization",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_api",
+        "description": "docker.app.testFiles.test_api",
+        "peekOfCode": "def test_geometry_optimization():\n    output_data = {\n        'optimized_coordinates': [\n            [ 0.        ,  0.        ,  0.        ],\n            [ 1.19854484,  0.        ,  0.        ],\n            [-0.52919798,  0.9044144 ,  0.        ],\n            [-0.39557848, -0.58476912,  0.77707765],\n            [ 0.48615821, -0.69624683, -1.15337964],\n            [ 0.93500306, -0.070097  , -1.83234072],\n            [-0.46147619, -1.16791665, -1.49347916],",
+        "detail": "docker.app.testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "mock_input",
+        "kind": 5,
+        "importPath": "docker.app.testFiles.test_api",
+        "description": "docker.app.testFiles.test_api",
+        "peekOfCode": "mock_input = {\n    \"species\": [\"C\", \"H\", \"H\", \"H\", \"C\", \"H\", \"H\", \"H\"],\n    \"coordinates\": [\n        [0.00000000,  0.00000000, 0.77129800],\n        [-0.50676600,   0.87777700,  1.15591600],\n        [1.01356000,  -0.00001600, 1.15591600],\n        [-0.50679400,  -0.87776100,   1.15591600],\n        [0.00000000,   0.00000000,  -0.77129800],\n        [0.50676600,   0.87777700,  -1.15591600],\n        [0.50679400, -0.87776100, -1.15591600],",
+        "detail": "docker.app.testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_weight_file",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_files",
+        "description": "docker.app.testFiles.test_files",
+        "peekOfCode": "def test_weight_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"../trained_models/bond_model.h5\", \"../trained_models/angle_model.h5\", \"../trained_models/nonbonds_model.h5\", \"../trained_models/dihedrals_model.h5\"])\ndef test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"../scripts/predictor.py\", \"../scripts/optimizer.py\", \"../scripts/featurizer.py\", \"../scripts/models.py\", \"../scripts/band.py\",\"../scripts/xyz_to_zmat.py\",\"../main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "detail": "docker.app.testFiles.test_files",
+        "documentation": {}
+    },
+    {
+        "label": "test_model_file",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_files",
+        "description": "docker.app.testFiles.test_files",
+        "peekOfCode": "def test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"../scripts/predictor.py\", \"../scripts/optimizer.py\", \"../scripts/featurizer.py\", \"../scripts/models.py\", \"../scripts/band.py\",\"../scripts/xyz_to_zmat.py\",\"../main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "detail": "docker.app.testFiles.test_files",
+        "documentation": {}
+    },
+    {
+        "label": "test_script_file",
+        "kind": 2,
+        "importPath": "docker.app.testFiles.test_files",
+        "description": "docker.app.testFiles.test_files",
+        "peekOfCode": "def test_script_file(file):\n    assert os.path.isfile(file)",
+        "detail": "docker.app.testFiles.test_files",
         "documentation": {}
     },
     {
