@@ -47,19 +47,51 @@ def test_energy_prediction():
 
 def test_geometry_optimization():
     output_data = {
-        'optimized_coordinates': [
-            [ 0.        ,  0.        ,  0.        ],
-            [ 1.19854484,  0.        ,  0.        ],
-            [-0.52919798,  0.9044144 ,  0.        ],
-            [-0.39557848, -0.58476912,  0.77707765],
-            [ 0.48615821, -0.69624683, -1.15337964],
-            [ 0.93500306, -0.070097  , -1.83234072],
-            [-0.46147619, -1.16791665, -1.49347916],
-            [ 1.0123795 , -1.63082576, -0.85133562]
+        "optimized_coordinates": [
+            [
+                0.0,
+                0.0,
+                0.0
+            ],
+            [
+                1.1985448415367228,
+                0.0,
+                0.0
+            ],
+            [
+                -0.5291979761742501,
+                0.9044143976967525,
+                0.0
+            ],
+            [
+                -0.3955784848256375,
+                -0.5847691241021874,
+                0.7770776465543114
+            ],
+            [
+                0.48615820969371526,
+                -0.6962468293219094,
+                -1.1533796418045001
+            ],
+            [
+                0.935003057775518,
+                -0.07009699855725882,
+                -1.832340716326718
+            ],
+            [
+                -0.4614761913366452,
+                -1.1679166458199854,
+                -1.4934791634343791
+            ],
+            [
+                1.0123795020219943,
+                -1.6308257565857425,
+                -0.8513356176046953
+            ]
         ],
-        'optimized_energy': -789.4498901367188
+        "optimized_energy": -789.4498901367188
     }
     response = requests.post(base_url+"/geometricOptimization",json=mock_input)
     assert response.status_code == 200
-    assert response.json()["optimized_coordinates"].all() == np.array(output_data["optimized_coordinates"]).all()
+    assert response.json()["optimized_coordinates"] == output_data["optimized_coordinates"]
     assert response.json()["optimized_energy"] == output_data["optimized_energy"]

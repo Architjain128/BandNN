@@ -33,5 +33,6 @@ def predict_energy_wrapper(data):
 
 def geometricOptimization_wrapper(data):
     optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)
-    return {"optimized_coordinates":optimized_coordinates,"optimized_energy":optimized_energy}
+    val= {"optimized_coordinates":optimized_coordinates.tolist(),"optimized_energy":optimized_energy}
+    return val
 
