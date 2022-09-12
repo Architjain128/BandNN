@@ -534,7 +534,7 @@
         "kind": 2,
         "importPath": "docker.app.scripts.band",
         "description": "docker.app.scripts.band",
-        "peekOfCode": "def predict_energy_wrapper(data):\n    prediction_model = get_default_prediction_model()\n    energy = predict_energy(prediction_model,data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"energy\":energy}\ndef geometricOptimization_wrapper(data):\n    optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"optimized_coordinates\":optimized_coordinates,\"optimized_energy\":optimized_energy}",
+        "peekOfCode": "def predict_energy_wrapper(data):\n    prediction_model = get_default_prediction_model()\n    energy = predict_energy(prediction_model,data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"energy\":energy}\ndef geometricOptimization_wrapper(data):\n    optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)\n    val= {\"optimized_coordinates\":optimized_coordinates.tolist(),\"optimized_energy\":optimized_energy}\n    return val",
         "detail": "docker.app.scripts.band",
         "documentation": {}
     },
@@ -543,7 +543,7 @@
         "kind": 2,
         "importPath": "docker.app.scripts.band",
         "description": "docker.app.scripts.band",
-        "peekOfCode": "def geometricOptimization_wrapper(data):\n    optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"optimized_coordinates\":optimized_coordinates,\"optimized_energy\":optimized_energy}",
+        "peekOfCode": "def geometricOptimization_wrapper(data):\n    optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)\n    val= {\"optimized_coordinates\":optimized_coordinates.tolist(),\"optimized_energy\":optimized_energy}\n    return val",
         "detail": "docker.app.scripts.band",
         "documentation": {}
     },
@@ -813,7 +813,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_api",
         "description": "docker.app.testFiles.test_api",
-        "peekOfCode": "def test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {\n        'optimized_coordinates': [\n            [ 0.        ,  0.        ,  0.        ],\n            [ 1.19854484,  0.        ,  0.        ],\n            [-0.52919798,  0.9044144 ,  0.        ],",
+        "peekOfCode": "def test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,",
         "detail": "docker.app.testFiles.test_api",
         "documentation": {}
     },
@@ -822,7 +822,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_api",
         "description": "docker.app.testFiles.test_api",
-        "peekOfCode": "def test_geometry_optimization():\n    output_data = {\n        'optimized_coordinates': [\n            [ 0.        ,  0.        ,  0.        ],\n            [ 1.19854484,  0.        ,  0.        ],\n            [-0.52919798,  0.9044144 ,  0.        ],\n            [-0.39557848, -0.58476912,  0.77707765],\n            [ 0.48615821, -0.69624683, -1.15337964],\n            [ 0.93500306, -0.070097  , -1.83234072],\n            [-0.46147619, -1.16791665, -1.49347916],",
+        "peekOfCode": "def test_geometry_optimization():\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,\n                0.0\n            ],\n            [\n                1.1985448415367228,",
         "detail": "docker.app.testFiles.test_api",
         "documentation": {}
     },
@@ -840,7 +840,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_files",
         "description": "docker.app.testFiles.test_files",
-        "peekOfCode": "def test_weight_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"../trained_models/bond_model.h5\", \"../trained_models/angle_model.h5\", \"../trained_models/nonbonds_model.h5\", \"../trained_models/dihedrals_model.h5\"])\ndef test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"../scripts/predictor.py\", \"../scripts/optimizer.py\", \"../scripts/featurizer.py\", \"../scripts/models.py\", \"../scripts/band.py\",\"../scripts/xyz_to_zmat.py\",\"../main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "peekOfCode": "def test_weight_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./trained_models/bond_model.h5\", \"./trained_models/angle_model.h5\", \"./trained_models/nonbonds_model.h5\", \"./trained_models/dihedrals_model.h5\"])\ndef test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\", \"./scripts/optimizer.py\", \"./scripts/featurizer.py\", \"./scripts/models.py\", \"./scripts/band.py\",\"./scripts/xyz_to_zmat.py\",\"./main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
         "detail": "docker.app.testFiles.test_files",
         "documentation": {}
     },
@@ -849,7 +849,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_files",
         "description": "docker.app.testFiles.test_files",
-        "peekOfCode": "def test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"../scripts/predictor.py\", \"../scripts/optimizer.py\", \"../scripts/featurizer.py\", \"../scripts/models.py\", \"../scripts/band.py\",\"../scripts/xyz_to_zmat.py\",\"../main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "peekOfCode": "def test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\", \"./scripts/optimizer.py\", \"./scripts/featurizer.py\", \"./scripts/models.py\", \"./scripts/band.py\",\"./scripts/xyz_to_zmat.py\",\"./main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
         "detail": "docker.app.testFiles.test_files",
         "documentation": {}
     },

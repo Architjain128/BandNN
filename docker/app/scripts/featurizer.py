@@ -171,13 +171,14 @@ def generate_nonbond_data(conformer,bonds,nonbondcutoff):
     return nonbond_list, nonbond_distances
 
 def generate_dihedral_data(conformer,bonds):
-    """genrate data for dihedral"""
+    """generate data for dihedral"""
     dihedral_list= []
     for i in range(len(conformer)):
         for j in range(len(conformer)):
             for k in range(len(conformer)):
                 for l_ind in range(i):
-                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind and bonds[i][j] == 1 and bonds[j][k]==1 and bonds[k][l_ind]==1):
+                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind and
+                    bonds[i][j]+bonds[j][k]+bonds[k][l_ind]==3):
                 # for l_ind in range(i):
                 #     if (i==j + i==k + j==k + j==l_ind + k==l_ind)==0 and \
                 #         bonds[i][j] == 1 and bonds[j][k]==1 and bonds[k][l_ind]==1:

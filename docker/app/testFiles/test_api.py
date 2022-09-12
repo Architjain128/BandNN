@@ -38,7 +38,7 @@ def test_root():
 def test_creator():
     response = requests.get(base_url+"/creator")
     assert response.status_code == 200
-    assert response.json() == "Archit Jain & Pulkit Gupta"
+    assert response.json() == {"server":"Archit Jain & Pulkit Gupta"}
 
 def test_energy_prediction():
     response = requests.post(base_url+"/predictEnergy",json=mock_input)
