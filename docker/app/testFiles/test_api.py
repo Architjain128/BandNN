@@ -1,10 +1,7 @@
-import imp
-import json
+"""Api test cases"""
 import requests
-import numpy as np
-from urllib import response
 
-base_url="http://127.0.0.1:8000"
+BASE_URL="http://127.0.0.1:8000"
 
 mock_input = {
     "species": ["C", "H", "H", "H", "C", "H", "H", "H"],
@@ -31,21 +28,25 @@ mock_input = {
 }
 
 def test_root():
-    response = requests.get(base_url)
+    """test for root"""
+    response = requests.get(BASE_URL,timeout=3600)
     assert response.status_code == 200
     assert response.json() == "Hello World"
 
 def test_creator():
-    response = requests.get(base_url+"/creator")
+    """test for creator"""
+    response = requests.get(BASE_URL+"/creator",timeout=3600)
     assert response.status_code == 200
     assert response.json() == {"server":"Archit Jain & Pulkit Gupta"}
 
 def test_energy_prediction():
-    response = requests.post(base_url+"/predictEnergy",json=mock_input)
+    """test for energy prediction"""
+    response = requests.post(BASE_URL+"/predictEnergy",json=mock_input,timeout=3600)
     assert response.status_code == 200
     assert response.json() == {"energy": -712.6749267578125}
 
 def test_geometry_optimization():
+    """test for geometry optimization"""
     output_data = {
         "optimized_coordinates": [
             [
@@ -91,7 +92,7 @@ def test_geometry_optimization():
         ],
         "optimized_energy": -789.4498901367188
     }
-    response = requests.post(base_url+"/geometricOptimization",json=mock_input)
+    response = requests.post(BASE_URL+"/geometricOptimization",json=mock_input,timeout=3600)
     assert response.status_code == 200
     assert response.json()["optimized_coordinates"] == output_data["optimized_coordinates"]
     assert response.json()["optimized_energy"] == output_data["optimized_energy"]

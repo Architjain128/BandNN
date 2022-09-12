@@ -177,12 +177,9 @@ def generate_dihedral_data(conformer,bonds):
         for j in range(len(conformer)):
             for k in range(len(conformer)):
                 for l_ind in range(i):
-                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind and
-                    bonds[i][j]+bonds[j][k]+bonds[k][l_ind]==3):
-                # for l_ind in range(i):
-                #     if (i==j + i==k + j==k + j==l_ind + k==l_ind)==0 and \
-                #         bonds[i][j] == 1 and bonds[j][k]==1 and bonds[k][l_ind]==1:
-                        dihedral_list.append([i,j,k,l_ind])
+                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind):
+                        if(bonds[i][j]==1 and bonds[j][k]==1 and bonds[k][l_ind]==1):
+                            dihedral_list.append([i,j,k,l_ind])
 
     dihedrals = []
     for dihed in dihedral_list:
