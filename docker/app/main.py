@@ -8,7 +8,7 @@ app = FastAPI()
 class BANDInput(BaseModel):
     """Input format for BAND"""
     species: List[str]
-    coordinates: List[list[float]]
+    coordinates: List[List[float]]
     bond_connectivity_list: List[List[int]]
 
     def __init__(self, species, coordinates, bond_connectivity_list):
