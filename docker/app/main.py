@@ -30,6 +30,7 @@ class BANDInput(BaseModel):
         """print band input bond connectivity list"""
         return f"bond_connectivity_list: {self.bond_connectivity_list}"
 
+
 @app.get("/")
 def read_root():
     """root"""
