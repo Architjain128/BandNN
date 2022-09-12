@@ -1,4 +1,5 @@
 """FastAPI server"""
+from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
 from scripts.band import predict_energy_wrapper, geometric_optimization_wrapper
@@ -6,9 +7,9 @@ from scripts.band import predict_energy_wrapper, geometric_optimization_wrapper
 app = FastAPI()
 class BANDInput(BaseModel):
     """Input format for BAND"""
-    species: list[str]
-    coordinates: list[list[float]]
-    bond_connectivity_list: list[list[int]]
+    species: List[str]
+    coordinates: List[list[float]]
+    bond_connectivity_list: List[List[int]]
 
     def __init__(self, species, coordinates, bond_connectivity_list):
         super().__init__(species=species, coordinates=coordinates,
