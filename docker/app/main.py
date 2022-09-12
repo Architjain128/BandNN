@@ -1,7 +1,7 @@
-from typing import Union
+"""Main file"""
 from fastapi import FastAPI
 from pydantic import BaseModel
-from scripts.band import *
+from scripts.band import predict_energy_wrapper, geometric_optimization_wrapper
 
 app = FastAPI()
 
@@ -12,16 +12,20 @@ class BANDInput(BaseModel):
 
 @app.get("/")
 def read_root():
+    """root"""
     return "Hello World"
 
-@app.get("/creator") 
+@app.get("/creator")
 def read_item():
+    """This is a function to return the creator of the API"""
     return "Archit Jain & Pulkit Gupta"
 
 @app.post("/predictEnergy")
-def predictEnergy(data: BANDInput):
+def predict_energy(data: BANDInput):
+    """predict_energy function"""
     return predict_energy_wrapper(data)
 
 @app.post("/geometricOptimization")
-def geometricOptimization(data: BANDInput):
-    return geometricOptimization_wrapper(data)
+def geometric_optimization(data: BANDInput):
+    """geometric_optimization function"""
+    return geometric_optimization_wrapper(data)

@@ -1,0 +1,508 @@
+[
+    {
+        "label": "numpy",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "numpy",
+        "description": "numpy",
+        "detail": "numpy",
+        "documentation": {}
+    },
+    {
+        "label": "Sequential",
+        "importPath": "keras.models",
+        "description": "keras.models",
+        "isExtraImport": true,
+        "detail": "keras.models",
+        "documentation": {}
+    },
+    {
+        "label": "Dense",
+        "importPath": "keras.layers",
+        "description": "keras.layers",
+        "isExtraImport": true,
+        "detail": "keras.layers",
+        "documentation": {}
+    },
+    {
+        "label": "scipy.optimize",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "scipy.optimize",
+        "description": "scipy.optimize",
+        "detail": "scipy.optimize",
+        "documentation": {}
+    },
+    {
+        "label": "imp",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "imp",
+        "description": "imp",
+        "detail": "imp",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
+        "label": "requests",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "requests",
+        "description": "requests",
+        "detail": "requests",
+        "documentation": {}
+    },
+    {
+        "label": "response",
+        "importPath": "urllib",
+        "description": "urllib",
+        "isExtraImport": true,
+        "detail": "urllib",
+        "documentation": {}
+    },
+    {
+        "label": "os",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "os",
+        "description": "os",
+        "detail": "os",
+        "documentation": {}
+    },
+    {
+        "label": "pytest",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "pytest",
+        "description": "pytest",
+        "detail": "pytest",
+        "documentation": {}
+    },
+    {
+        "label": "FastAPI",
+        "importPath": "fastapi",
+        "description": "fastapi",
+        "isExtraImport": true,
+        "detail": "fastapi",
+        "documentation": {}
+    },
+    {
+        "label": "BaseModel",
+        "importPath": "pydantic",
+        "description": "pydantic",
+        "isExtraImport": true,
+        "detail": "pydantic",
+        "documentation": {}
+    },
+    {
+        "label": "predict_energy_wrapper",
+        "importPath": "scripts.band",
+        "description": "scripts.band",
+        "isExtraImport": true,
+        "detail": "scripts.band",
+        "documentation": {}
+    },
+    {
+        "label": "geometric_optimization_wrapper",
+        "importPath": "scripts.band",
+        "description": "scripts.band",
+        "isExtraImport": true,
+        "detail": "scripts.band",
+        "documentation": {}
+    },
+    {
+        "label": "predict_energy_wrapper",
+        "kind": 2,
+        "importPath": "scripts.band",
+        "description": "scripts.band",
+        "peekOfCode": "def predict_energy_wrapper(data):\n    \"\"\"wrapper for predict_energy function\"\"\"\n    prediction_model = get_default_prediction_model()\n    energy = predict_energy(prediction_model,\n        data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"energy\":energy}\ndef geometric_optimization_wrapper(data):\n    \"\"\"wrapper for geometric optimization function\"\"\"\n    optimized_coordinates, optimized_energy=\\\n        optimize(data.coordinates,data.species,",
+        "detail": "scripts.band",
+        "documentation": {}
+    },
+    {
+        "label": "geometric_optimization_wrapper",
+        "kind": 2,
+        "importPath": "scripts.band",
+        "description": "scripts.band",
+        "peekOfCode": "def geometric_optimization_wrapper(data):\n    \"\"\"wrapper for geometric optimization function\"\"\"\n    optimized_coordinates, optimized_energy=\\\n        optimize(data.coordinates,data.species,\n            data.bond_connectivity_list)\n    val= {\"optimized_coordinates\":optimized_coordinates.tolist(),\n        \"optimized_energy\":optimized_energy}\n    return val",
+        "detail": "scripts.band",
+        "documentation": {}
+    },
+    {
+        "label": "get_features",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def get_features(conformer,species,bond_connectivity_list):\n    \"\"\"generating all feature vectors\"\"\"\n    conformer=np.array(conformer)\n    nonbondcutoff = 6\n    bonds = generate_bondconnectivty_matrix(bond_connectivity_list)\n    #Calculate the atomic environment vector for each atom\n    atomic_envs = generate_atomic_env(bonds, species)\n    #Calculate the sets of bonds and bond values\n    bondlist, bonddistances = generate_bond_data(conformer, bonds)\n    #Calculate the 3 atom angle sets and angle values",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_bondconnectivty_matrix",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_bondconnectivty_matrix(bond_connectivity_list):\n    \"\"\"genrate matrix for bond connectivity\"\"\"\n    bond_matrix = [[0 for i in range(len(bond_connectivity_list))] for \\\n        j in range(len(bond_connectivity_list))]\n    for i_1, bond_connectivity_list_i_1 in enumerate(bond_connectivity_list):\n        for i_2 in bond_connectivity_list_i_1:\n            bond_matrix[i_1][i_2] = 1\n            bond_matrix[i_2][i_1] = 1\n    return bond_matrix\ndef generate_atomic_env(bonds, species):",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_atomic_env",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_atomic_env(bonds, species):\n    \"\"\"genrate atomic environment\"\"\"\n    atomic_envs = []\n    for i, bonds_i in enumerate(bonds):\n        atom_id = {'H':0, 'C':1, 'O':2, 'N':3 }\n        atomtype = [0,0,0,0]\n        atomtype[atom_id[species[i]]]  = 1\n        immediate_neighbour_count = [0,0,0,0]\n        for j, bonds_i_j in enumerate(bonds_i):\n            if bonds_i_j > 0:",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_bond_data",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_bond_data(conformer,bonds):\n    \"\"\"Calculate the paiwise-distances among the atoms\"\"\"\n    distance = [[0 for i in range(len(conformer))] for j in range(len(conformer))]\n    for i, conformer_i in enumerate(conformer):\n        for j, conformer_j in enumerate(conformer):\n            distance[i][j] = np.linalg.norm(conformer_i-conformer_j)\n    bondlist = []\n    bonddistances = []\n    for i, bonds_i in enumerate(bonds):\n        for j in range(i):",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_bond_features",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_bond_features(bonddistances, bondlist, atomtype):\n    \"\"\"get bond feature vector\"\"\"\n    labels = []\n    for bond, bondlist_bond in enumerate(bondlist):\n        bond_feature = []\n        if atomtype[bondlist_bond[0]] > atomtype[bondlist_bond[1]]:\n            bond_feature += atomtype[bondlist_bond[0]] + atomtype[bondlist_bond[1]]\n        else:\n            bond_feature += atomtype[bondlist_bond[1]] + atomtype[bondlist_bond[0]]\n        bond_feature.append(bonddistances[bond])",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_angle_data",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_angle_data(conformer,bonds):\n    \"\"\"genrate data for angles\"\"\"\n    angles_list = []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            for k in range(len(conformer)):\n                if j!=i and j!=k and i>k and bonds[i][j]!=0 and bonds[j][k]!=0:\n                    angles_list.append([i,j,k])\n    angles = []\n    for angle_triplet in angles_list:",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_angle",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def get_angle(coor1,coor2,coor3):\n    \"\"\"calculate angle\"\"\"\n    b_a =coor1 - coor2\n    b_c = coor3 - coor2\n    cosine_angle = np.dot(b_a, b_c) / (np.linalg.norm(b_a) * np.linalg.norm(b_c))\n    if cosine_angle > 1.0:\n        cosine_angle=1.0\n    elif cosine_angle < -1.0:\n        cosine_angle=-1.0\n    if -1.0 <= cosine_angle <=1.0 :",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_angle_features",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_angle_features(angles, angletype, atomtype,bondlist,bonddistances):\n    \"\"\"get angle feature vector\"\"\"\n    labels = []\n    for angle, angletype_angle in enumerate(angletype):\n        anglefeature = []\n        if atomtype[angletype_angle[0]] > atomtype[angletype_angle[2]]:\n            anglefeature += atomtype[angletype_angle[0]] + atomtype[angletype_angle[2]]\n            bondlen1 = get_bondlen(angletype_angle[0],angletype_angle[1],bondlist,bonddistances)\n            bondlen2 = get_bondlen(angletype_angle[1],angletype_angle[2],bondlist,bonddistances)\n        else:",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_bondlen",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def get_bondlen(i_1,i_2,bondtypelist,bondlenlist):\n    \"\"\"calculate bond length\"\"\"\n    try:\n        index = bondtypelist.index([i_1,i_2])\n    except: # pylint: disable=bare-except\n        index = bondtypelist.index([i_2,i_1])\n    return bondlenlist[index]\ndef generate_nonbond_data(conformer,bonds,nonbondcutoff):\n    \"\"\"Calculate the paiwise-distances among the atoms\"\"\"\n    distance = [[0 for i in range(len(conformer))] for j in range(len(conformer))]",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_nonbond_data",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_nonbond_data(conformer,bonds,nonbondcutoff):\n    \"\"\"Calculate the paiwise-distances among the atoms\"\"\"\n    distance = [[0 for i in range(len(conformer))] for j in range(len(conformer))]\n    for i, conformer_i in enumerate(conformer):\n        for j, conformer_j in enumerate(conformer):\n            distance[i][j] = np.linalg.norm(conformer_i-conformer_j)\n    nonbond_distances = []\n    nonbond_list = []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_dihedral_data",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_dihedral_data(conformer,bonds):\n    \"\"\"genrate data for dihedral\"\"\"\n    dihedral_list= []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            for k in range(len(conformer)):\n                for l_ind in range(i):\n                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind and bonds[i][j] == 1 and bonds[j][k]==1 and bonds[k][l_ind]==1):\n                # for l_ind in range(i):\n                #     if (i==j + i==k + j==k + j==l_ind + k==l_ind)==0 and \\",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_dihedral",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def get_dihedral(p_0, p_1, p_2, p_3):\n    \"\"\"calculate dihedral\"\"\"\n    b_0=p_0-p_1\n    b_1=p_2-p_1\n    b_2=p_3-p_2\n    b_0xb_1 = np.cross(b_0,b_1)\n    b_1xb_2 = np.cross(b_2,b_1)\n    b_0xb_1_x_b_1xb_2 = np.cross(b_0xb_1,b_1xb_2)\n    y_y = np.dot(b_0xb_1_x_b_1xb_2, b_1)*(1.0/np.linalg.norm(b_1))\n    x_x = np.dot(b_0xb_1, b_1xb_2)",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_angleval",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def get_angleval(i_1,i_2,i_3,angletypelist,anglevallist):\n    \"\"\"calculate angle value\"\"\"\n    try:\n        index = angletypelist.index([i_1,i_2,i_3])\n    except: # pylint: disable=bare-except\n        index = angletypelist.index([i_3,i_2,i_1])\n    return anglevallist[index]\ndef generate_dihedralangle_features(dihedrals, \\\n    atomtype,bondtypelist,bondlenlist,angles):\n    \"\"\"get dihedral feature vector\"\"\"",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "generate_dihedralangle_features",
+        "kind": 2,
+        "importPath": "scripts.featurizer",
+        "description": "scripts.featurizer",
+        "peekOfCode": "def generate_dihedralangle_features(dihedrals, \\\n    atomtype,bondtypelist,bondlenlist,angles):\n    \"\"\"get dihedral feature vector\"\"\"\n    # dihedral_angles = dihedrals[0]\n    dihedral_list = dihedrals[1]\n    # angletypelist =\n    anglevallist = angles[1]\n    labels = []\n    for dihedral, dihedral_angle in enumerate(dihedrals[0]):\n        dihedral_feature = []",
+        "detail": "scripts.featurizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_bonds_model",
+        "kind": 2,
+        "importPath": "scripts.models",
+        "description": "scripts.models",
+        "peekOfCode": "def get_bonds_model():\n    \"\"\"generates neural model for bonds\"\"\"\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=17))\n    model.add(Dense(256, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model\ndef get_angles_model():\n    \"\"\"generates neural model for angles\"\"\"",
+        "detail": "scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_angles_model",
+        "kind": 2,
+        "importPath": "scripts.models",
+        "description": "scripts.models",
+        "peekOfCode": "def get_angles_model():\n    \"\"\"generates neural model for angles\"\"\"\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=27))\n    model.add(Dense(350, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model\ndef get_nonbonds_model():\n    \"\"\"generates neural model for non-bonds\"\"\"",
+        "detail": "scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_nonbonds_model",
+        "kind": 2,
+        "importPath": "scripts.models",
+        "description": "scripts.models",
+        "peekOfCode": "def get_nonbonds_model():\n    \"\"\"generates neural model for non-bonds\"\"\"\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=17))\n    model.add(Dense(256, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model\ndef get_dihedrals_model():\n    \"\"\"generates neural model for dihedrals\"\"\"",
+        "detail": "scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "get_dihedrals_model",
+        "kind": 2,
+        "importPath": "scripts.models",
+        "description": "scripts.models",
+        "peekOfCode": "def get_dihedrals_model():\n    \"\"\"generates neural model for dihedrals\"\"\"\n    model = Sequential()\n    model.add(Dense(128, activation='relu', input_dim=38))\n    model.add(Dense(512, activation='relu'))\n    model.add(Dense(128, activation='relu'))\n    model.add(Dense(1, activation='linear'))\n    return model",
+        "detail": "scripts.models",
+        "documentation": {}
+    },
+    {
+        "label": "optimize",
+        "kind": 2,
+        "importPath": "scripts.optimizer",
+        "description": "scripts.optimizer",
+        "peekOfCode": "def optimize(coordinates,species,bonds):\n    \"\"\"optimization algorithm\"\"\"\n    prediction_model = get_default_prediction_model()\n    zparams,zconnect =  get_zmat_from_coordinates(coordinates)\n    optim_params = sop.minimize(optimizer_oracle,zparams,method='Nelder-Mead',\\\n        args=(zconnect,species,bonds,prediction_model))\n    optimized_coordinates = coordinates = get_coordinates_from_zmat(optim_params['x'],zconnect)\n    optimized_energy = optim_params['fun']\n    return optimized_coordinates, optimized_energy\ndef optimizer_oracle(zparams,zconnect,species,bonds,prediction_model):",
+        "detail": "scripts.optimizer",
+        "documentation": {}
+    },
+    {
+        "label": "optimizer_oracle",
+        "kind": 2,
+        "importPath": "scripts.optimizer",
+        "description": "scripts.optimizer",
+        "peekOfCode": "def optimizer_oracle(zparams,zconnect,species,bonds,prediction_model):\n    \"\"\"input function to minimize for scipy optimize\"\"\"\n    coordinates=get_coordinates_from_zmat(zparams, zconnect)\n    energy = predict_energy(prediction_model,coordinates,species,bonds)\n    return energy",
+        "detail": "scripts.optimizer",
+        "documentation": {}
+    },
+    {
+        "label": "get_default_prediction_model",
+        "kind": 2,
+        "importPath": "scripts.predictor",
+        "description": "scripts.predictor",
+        "peekOfCode": "def get_default_prediction_model():\n    \"\"\"loading neural models for BAND\"\"\"\n    bonds_model = get_bonds_model()\n    bonds_model.load_weights('./weights/bond_weights.h5')\n    angles_model = get_angles_model()\n    angles_model.load_weights('./weights/angle_weights.h5')\n    nonbonds_model = get_nonbonds_model()\n    nonbonds_model.load_weights('./weights/nonbonds_weights.h5')\n    dihedralangles_model = get_dihedrals_model()\n    dihedralangles_model.load_weights('./weights/dihedral_weights.h5')",
+        "detail": "scripts.predictor",
+        "documentation": {}
+    },
+    {
+        "label": "predict_energy",
+        "kind": 2,
+        "importPath": "scripts.predictor",
+        "description": "scripts.predictor",
+        "peekOfCode": "def predict_energy(model,coordinates,species,bonds):\n    \"\"\"Predict energy for molecule\"\"\"\n    features = get_features(coordinates, species, bonds)\n    bond_energies = model['bonds'].predict(features['bonds'])\n    angle_energies = model['angles'].predict(features['angles'])\n    nonbond_energies = model['nonbonds'].predict(features['nonbonds'])\n    dihedral_energies = model['dihedrals'].predict(features['dihedrals'])\n    energy = -1*(np.sum(bond_energies) + np.sum(angle_energies) + np.sum(nonbond_energies)\\\n         + np.sum(dihedral_energies))\n    return energy",
+        "detail": "scripts.predictor",
+        "documentation": {}
+    },
+    {
+        "label": "get_zmat_from_coordinates",
+        "kind": 2,
+        "importPath": "scripts.xyz_to_zmat",
+        "description": "scripts.xyz_to_zmat",
+        "peekOfCode": "def get_zmat_from_coordinates(xyzarr):\n    \"\"\"generate z_mat from coordinates\"\"\"\n    xyzarr = np.array(xyzarr)\n    distmat = distance_matrix(xyzarr)\n    zmat = []\n    npart = xyzarr.shape[0]\n    rlist = []\n    alist = []\n    dlist = []\n    rconnect = []",
+        "detail": "scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "get_coordinates_from_zmat",
+        "kind": 2,
+        "importPath": "scripts.xyz_to_zmat",
+        "description": "scripts.xyz_to_zmat",
+        "peekOfCode": "def get_coordinates_from_zmat(zparams, zconnect):\n    \"\"\"generate coordinates from z_mat\"\"\"\n    rlist=[]\n    alist=[]\n    dlist=[]\n    zparams = zparams.tolist()\n    for _ in range(len(zconnect[0])):\n        rlist.append(zparams.pop(0))\n    for _ in range(len(zconnect[1])):\n        alist.append(zparams.pop(0))",
+        "detail": "scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "angle",
+        "kind": 2,
+        "importPath": "scripts.xyz_to_zmat",
+        "description": "scripts.xyz_to_zmat",
+        "peekOfCode": "def angle(xyzarr, i, j, k):\n    \"\"\"calculate angle\"\"\"\n    rij = xyzarr[i] - xyzarr[j]\n    rkj = xyzarr[k] - xyzarr[j]\n    cos_theta = np.dot(rij, rkj)\n    sin_theta = np.linalg.norm(np.cross(rij, rkj))\n    theta = np.arctan2(sin_theta, cos_theta)\n    return theta\ndef dihedral(xyzarr, i, j, k, l_val):\n    \"\"\"calculate dihedral\"\"\"",
+        "detail": "scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "dihedral",
+        "kind": 2,
+        "importPath": "scripts.xyz_to_zmat",
+        "description": "scripts.xyz_to_zmat",
+        "peekOfCode": "def dihedral(xyzarr, i, j, k, l_val):\n    \"\"\"calculate dihedral\"\"\"\n    rji = xyzarr[j] - xyzarr[i]\n    rkj = xyzarr[k] - xyzarr[j]\n    rlk = xyzarr[l_val] - xyzarr[k]\n    v_1 = np.cross(rji, rkj)\n    v_1 = v_1 / np.linalg.norm(v_1)\n    v_2 = np.cross(rlk, rkj)\n    v_2 = v_2 / np.linalg.norm(v_2)\n    m_1 = np.cross(v_1, rkj) / np.linalg.norm(rkj)",
+        "detail": "scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "distance_matrix",
+        "kind": 2,
+        "importPath": "scripts.xyz_to_zmat",
+        "description": "scripts.xyz_to_zmat",
+        "peekOfCode": "def distance_matrix(xyzarr):\n    \"\"\"calculate distance matrix\"\"\"\n    npart = xyzarr.shape[0]\n    dist_mat = np.zeros([npart, npart])\n    for i in range(npart):\n        for j in range(0, i):\n            rvec = xyzarr[i] - xyzarr[j]\n            dist_mat[i][j] = dist_mat[j][i] = np.sqrt(np.dot(rvec, rvec))\n    return dist_mat",
+        "detail": "scripts.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "test_root",
+        "kind": 2,
+        "importPath": "testFiles.test_api",
+        "description": "testFiles.test_api",
+        "peekOfCode": "def test_root():\n    response = requests.get(base_url)\n    assert response.status_code == 200\n    assert response.json() == \"Hello World\"\ndef test_creator():\n    response = requests.get(base_url+\"/creator\")\n    assert response.status_code == 200\n    assert response.json() == \"Archit Jain & Pulkit Gupta\"\ndef test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)",
+        "detail": "testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_creator",
+        "kind": 2,
+        "importPath": "testFiles.test_api",
+        "description": "testFiles.test_api",
+        "peekOfCode": "def test_creator():\n    response = requests.get(base_url+\"/creator\")\n    assert response.status_code == 200\n    assert response.json() == \"Archit Jain & Pulkit Gupta\"\ndef test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {",
+        "detail": "testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_energy_prediction",
+        "kind": 2,
+        "importPath": "testFiles.test_api",
+        "description": "testFiles.test_api",
+        "peekOfCode": "def test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,",
+        "detail": "testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_geometry_optimization",
+        "kind": 2,
+        "importPath": "testFiles.test_api",
+        "description": "testFiles.test_api",
+        "peekOfCode": "def test_geometry_optimization():\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,\n                0.0\n            ],\n            [\n                1.1985448415367228,",
+        "detail": "testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "mock_input",
+        "kind": 5,
+        "importPath": "testFiles.test_api",
+        "description": "testFiles.test_api",
+        "peekOfCode": "mock_input = {\n    \"species\": [\"C\", \"H\", \"H\", \"H\", \"C\", \"H\", \"H\", \"H\"],\n    \"coordinates\": [\n        [0.00000000,  0.00000000, 0.77129800],\n        [-0.50676600,   0.87777700,  1.15591600],\n        [1.01356000,  -0.00001600, 1.15591600],\n        [-0.50679400,  -0.87776100,   1.15591600],\n        [0.00000000,   0.00000000,  -0.77129800],\n        [0.50676600,   0.87777700,  -1.15591600],\n        [0.50679400, -0.87776100, -1.15591600],",
+        "detail": "testFiles.test_api",
+        "documentation": {}
+    },
+    {
+        "label": "test_weight_file",
+        "kind": 2,
+        "importPath": "testFiles.test_files",
+        "description": "testFiles.test_files",
+        "peekOfCode": "def test_weight_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./trained_models/bond_model.h5\", \"./trained_models/angle_model.h5\", \"./trained_models/nonbonds_model.h5\", \"./trained_models/dihedrals_model.h5\"])\ndef test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\", \"./scripts/optimizer.py\", \"./scripts/featurizer.py\", \"./scripts/models.py\", \"./scripts/band.py\",\"./scripts/xyz_to_zmat.py\",\"./main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "detail": "testFiles.test_files",
+        "documentation": {}
+    },
+    {
+        "label": "test_model_file",
+        "kind": 2,
+        "importPath": "testFiles.test_files",
+        "description": "testFiles.test_files",
+        "peekOfCode": "def test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\", \"./scripts/optimizer.py\", \"./scripts/featurizer.py\", \"./scripts/models.py\", \"./scripts/band.py\",\"./scripts/xyz_to_zmat.py\",\"./main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "detail": "testFiles.test_files",
+        "documentation": {}
+    },
+    {
+        "label": "test_script_file",
+        "kind": 2,
+        "importPath": "testFiles.test_files",
+        "description": "testFiles.test_files",
+        "peekOfCode": "def test_script_file(file):\n    assert os.path.isfile(file)",
+        "detail": "testFiles.test_files",
+        "documentation": {}
+    },
+    {
+        "label": "BANDInput",
+        "kind": 6,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "class BANDInput(BaseModel):\n    species: list[str]\n    coordinates: list[list[float]]\n    bond_connectivity_list: list[list[int]]\n@app.get(\"/\")\ndef read_root():\n    \"\"\"root\"\"\"\n    return \"Hello World\"\n@app.get(\"/creator\")\ndef read_item():",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "read_root",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def read_root():\n    \"\"\"root\"\"\"\n    return \"Hello World\"\n@app.get(\"/creator\")\ndef read_item():\n    \"\"\"This is a function to return the creator of the API\"\"\"\n    return \"Archit Jain & Pulkit Gupta\"\n@app.post(\"/predictEnergy\")\ndef predict_energy(data: BANDInput):\n    \"\"\"predict_energy function\"\"\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "read_item",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def read_item():\n    \"\"\"This is a function to return the creator of the API\"\"\"\n    return \"Archit Jain & Pulkit Gupta\"\n@app.post(\"/predictEnergy\")\ndef predict_energy(data: BANDInput):\n    \"\"\"predict_energy function\"\"\"\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometric_optimization(data: BANDInput):\n    \"\"\"geometric_optimization function\"\"\"",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "predict_energy",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def predict_energy(data: BANDInput):\n    \"\"\"predict_energy function\"\"\"\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometric_optimization(data: BANDInput):\n    \"\"\"geometric_optimization function\"\"\"\n    return geometric_optimization_wrapper(data)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "geometric_optimization",
+        "kind": 2,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "def geometric_optimization(data: BANDInput):\n    \"\"\"geometric_optimization function\"\"\"\n    return geometric_optimization_wrapper(data)",
+        "detail": "main",
+        "documentation": {}
+    },
+    {
+        "label": "app",
+        "kind": 5,
+        "importPath": "main",
+        "description": "main",
+        "peekOfCode": "app = FastAPI()\nclass BANDInput(BaseModel):\n    species: list[str]\n    coordinates: list[list[float]]\n    bond_connectivity_list: list[list[int]]\n@app.get(\"/\")\ndef read_root():\n    \"\"\"root\"\"\"\n    return \"Hello World\"\n@app.get(\"/creator\")",
+        "detail": "main",
+        "documentation": {}
+    }
+]
