@@ -269,6 +269,32 @@
         "documentation": {}
     },
     {
+        "label": "disable",
+        "importPath": "faulthandler",
+        "description": "faulthandler",
+        "isExtraImport": true,
+        "detail": "faulthandler",
+        "documentation": {}
+    },
+    {
+        "label": "streamlit",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "streamlit",
+        "description": "streamlit",
+        "detail": "streamlit",
+        "documentation": {}
+    },
+    {
+        "label": "json",
+        "kind": 6,
+        "isExtraImport": true,
+        "importPath": "json",
+        "description": "json",
+        "detail": "json",
+        "documentation": {}
+    },
+    {
         "label": "get_features",
         "kind": 2,
         "importPath": "BAND-NN.scripts.featurizer",
@@ -1139,6 +1165,69 @@
         "description": "pylint.xyz_to_zmat",
         "peekOfCode": "def distance_matrix(xyzarr):\n    \"\"\"calculate distance matrix\"\"\"\n    npart = xyzarr.shape[0]\n    dist_mat = np.zeros([npart, npart])\n    for i in range(npart):\n        for j in range(0, i):\n            rvec = xyzarr[i] - xyzarr[j]\n            dist_mat[i][j] = dist_mat[j][i] = np.sqrt(np.dot(rvec, rvec))\n    return dist_mat",
         "detail": "pylint.xyz_to_zmat",
+        "documentation": {}
+    },
+    {
+        "label": "displayPDF",
+        "kind": 2,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "def displayPDF():\n    for i in range(1,24):\n        val=\"0000\"+i.__str__()\n        val=val[-4:]\n        st.image(f'./media/info_page-{val}.jpg', use_column_width=True)\ndef no_page():\n    '''\n        404 page\n    '''\n    st.error(\"### Oops! 404\")",
+        "detail": "streamlit.main",
+        "documentation": {}
+    },
+    {
+        "label": "no_page",
+        "kind": 2,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "def no_page():\n    '''\n        404 page\n    '''\n    st.error(\"### Oops! 404\")\ndef explore_page():\n    '''\n        Explore page\n    '''\n    st.write(\"\"\"## Model Overview \"\"\")",
+        "detail": "streamlit.main",
+        "documentation": {}
+    },
+    {
+        "label": "explore_page",
+        "kind": 2,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "def explore_page():\n    '''\n        Explore page\n    '''\n    st.write(\"\"\"## Model Overview \"\"\")\n    displayPDF()\n    st.write(\"\"\"\n            + api created by Archit Jain and Pulkit Gupta\n    \"\"\")\ndef show_predict_energy_page():",
+        "detail": "streamlit.main",
+        "documentation": {}
+    },
+    {
+        "label": "show_predict_energy_page",
+        "kind": 2,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "def show_predict_energy_page():\n    '''\n        Predict Energy page\n    '''\n    st.write(\"## Predict Energy Page\")\n    st.write(\"### User Inputs\")\n    inp_data= st.text_area(\"Enter Molecule desciption here: \",height=150)\n    st.caption(\"> \\* Refer to input format in the sidebar\")\n    run = st.button(label=\"Predict Energy\")\n    if run:",
+        "detail": "streamlit.main",
+        "documentation": {}
+    },
+    {
+        "label": "show_geometric_optimization_page",
+        "kind": 2,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "def show_geometric_optimization_page():\n    '''\n        Geometric Optimization page\n    '''\n    st.write(\"## Geometric Optimization Page\")\n    # with st.form(key='my_form2'):\n    st.write(\"### User Inputs\")\n    inp_data= st.text_area(\"Enter Molecule desciption here: \",height=150)\n    st.caption(\"> \\* Refer to input format in the sidebar\")\n    run = st.button(label=\"Optimize Geometry\")",
+        "detail": "streamlit.main",
+        "documentation": {}
+    },
+    {
+        "label": "input_reference",
+        "kind": 5,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "input_reference = {\n    \"species\": [\"C\", \"H\", \"H\", \"H\", \"C\", \"H\", \"H\", \"H\"],\n    \"coordinates\": [\n        [0.00000000,  0.00000000, 0.77129800],\n        [-0.50676600,   0.87777700,  1.15591600],\n        [1.01356000,  -0.00001600, 1.15591600],\n        [-0.50679400,  -0.87776100,   1.15591600],\n        [0.00000000,   0.00000000,  -0.77129800],\n        [0.50676600,   0.87777700,  -1.15591600],\n        [0.50679400, -0.87776100, -1.15591600],",
+        "detail": "streamlit.main",
+        "documentation": {}
+    },
+    {
+        "label": "page",
+        "kind": 5,
+        "importPath": "streamlit.main",
+        "description": "streamlit.main",
+        "peekOfCode": "page = st.sidebar.selectbox(\"Select the page you want to see\", [\"Predict Energy\",\"Geometric Optimazation\",\"Explore\"])\nst.sidebar.markdown(\"---\")\nst.sidebar.markdown(\"\"\"### Input Format Example\"\"\")\nst.sidebar.json(input_reference)\n# sidebar end\nst.title(\"BAND NN\")\nif page == \"Explore\":\n    explore_page()\nelif page == \"Predict Energy\":\n    show_predict_energy_page()",
+        "detail": "streamlit.main",
         "documentation": {}
     }
 ]

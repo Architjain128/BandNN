@@ -29,6 +29,12 @@ input_reference = {
     ]
 }
 
+def displayPDF():
+    for i in range(1,24):
+        val="0000"+i.__str__()
+        val=val[-4:]
+        st.image(f'./media/info_page-{val}.jpg', use_column_width=True)
+
 def no_page():
     '''
         404 page
@@ -39,7 +45,8 @@ def explore_page():
     '''
         Explore page
     '''
-    st.write("""## Model Overview """)    
+    st.write("""## Model Overview """)
+    displayPDF()
     st.write("""
             + api created by Archit Jain and Pulkit Gupta
     """)
