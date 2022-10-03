@@ -2,9 +2,10 @@
 from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
-from scripts.band import predict_energy_wrapper, geometric_optimization_wrapper
+from app.scripts.band import predict_energy_wrapper, geometric_optimization_wrapper
 
 app = FastAPI()
+
 class BANDInput(BaseModel):
     """Input format for BAND"""
     species: List[str]
@@ -29,7 +30,6 @@ class BANDInput(BaseModel):
     def print_bond_connectivity_list(self):
         """print band input bond connectivity list"""
         return f"bond_connectivity_list: {self.bond_connectivity_list}"
-
 
 @app.get("/")
 def read_root():

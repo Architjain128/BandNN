@@ -202,38 +202,12 @@
         "documentation": {}
     },
     {
-        "label": "imp",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "imp",
-        "description": "imp",
-        "detail": "imp",
-        "documentation": {}
-    },
-    {
-        "label": "json",
-        "kind": 6,
-        "isExtraImport": true,
-        "importPath": "json",
-        "description": "json",
-        "detail": "json",
-        "documentation": {}
-    },
-    {
         "label": "requests",
         "kind": 6,
         "isExtraImport": true,
         "importPath": "requests",
         "description": "requests",
         "detail": "requests",
-        "documentation": {}
-    },
-    {
-        "label": "response",
-        "importPath": "urllib",
-        "description": "urllib",
-        "isExtraImport": true,
-        "detail": "urllib",
         "documentation": {}
     },
     {
@@ -255,7 +229,7 @@
         "documentation": {}
     },
     {
-        "label": "Union",
+        "label": "List",
         "importPath": "typing",
         "description": "typing",
         "isExtraImport": true,
@@ -279,11 +253,19 @@
         "documentation": {}
     },
     {
-        "label": "*",
-        "importPath": "scripts.band",
-        "description": "scripts.band",
+        "label": "predict_energy_wrapper",
+        "importPath": "app.scripts.band",
+        "description": "app.scripts.band",
         "isExtraImport": true,
-        "detail": "scripts.band",
+        "detail": "app.scripts.band",
+        "documentation": {}
+    },
+    {
+        "label": "geometric_optimization_wrapper",
+        "importPath": "app.scripts.band",
+        "description": "app.scripts.band",
+        "isExtraImport": true,
+        "detail": "app.scripts.band",
         "documentation": {}
     },
     {
@@ -534,16 +516,16 @@
         "kind": 2,
         "importPath": "docker.app.scripts.band",
         "description": "docker.app.scripts.band",
-        "peekOfCode": "def predict_energy_wrapper(data):\n    prediction_model = get_default_prediction_model()\n    energy = predict_energy(prediction_model,data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"energy\":energy}\ndef geometricOptimization_wrapper(data):\n    optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)\n    val= {\"optimized_coordinates\":optimized_coordinates.tolist(),\"optimized_energy\":optimized_energy}\n    return val",
+        "peekOfCode": "def predict_energy_wrapper(data):\n    \"\"\"wrapper for predict_energy function\"\"\"\n    prediction_model = get_default_prediction_model()\n    energy = predict_energy(prediction_model,\n        data.coordinates,data.species,data.bond_connectivity_list)\n    return {\"energy\":energy}\ndef geometric_optimization_wrapper(data):\n    \"\"\"wrapper for geometric optimization function\"\"\"\n    optimized_coordinates, optimized_energy=\\\n        optimize(data.coordinates,data.species,",
         "detail": "docker.app.scripts.band",
         "documentation": {}
     },
     {
-        "label": "geometricOptimization_wrapper",
+        "label": "geometric_optimization_wrapper",
         "kind": 2,
         "importPath": "docker.app.scripts.band",
         "description": "docker.app.scripts.band",
-        "peekOfCode": "def geometricOptimization_wrapper(data):\n    optimized_coordinates, optimized_energy=optimize(data.coordinates,data.species,data.bond_connectivity_list)\n    val= {\"optimized_coordinates\":optimized_coordinates.tolist(),\"optimized_energy\":optimized_energy}\n    return val",
+        "peekOfCode": "def geometric_optimization_wrapper(data):\n    \"\"\"wrapper for geometric optimization function\"\"\"\n    optimized_coordinates, optimized_energy=\\\n        optimize(data.coordinates,data.species,\n            data.bond_connectivity_list)\n    val= {\"optimized_coordinates\":optimized_coordinates.tolist(),\n        \"optimized_energy\":optimized_energy}\n    return val",
         "detail": "docker.app.scripts.band",
         "documentation": {}
     },
@@ -642,7 +624,7 @@
         "kind": 2,
         "importPath": "docker.app.scripts.featurizer",
         "description": "docker.app.scripts.featurizer",
-        "peekOfCode": "def generate_dihedral_data(conformer,bonds):\n    \"\"\"genrate data for dihedral\"\"\"\n    dihedral_list= []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            for k in range(len(conformer)):\n                for l_ind in range(i):\n                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind and bonds[i][j] == 1 and bonds[j][k]==1 and bonds[k][l_ind]==1):\n                # for l_ind in range(i):\n                #     if (i==j + i==k + j==k + j==l_ind + k==l_ind)==0 and \\",
+        "peekOfCode": "def generate_dihedral_data(conformer,bonds):\n    \"\"\"generate data for dihedral\"\"\"\n    dihedral_list= []\n    for i in range(len(conformer)):\n        for j in range(len(conformer)):\n            for k in range(len(conformer)):\n                for l_ind in range(i):\n                    if( i!=j and i!=k and j!=k and j!=l_ind and k!=l_ind):\n                        if(bonds[i][j]==1 and bonds[j][k]==1 and bonds[k][l_ind]==1):\n                            dihedral_list.append([i,j,k,l_ind])",
         "detail": "docker.app.scripts.featurizer",
         "documentation": {}
     },
@@ -732,7 +714,7 @@
         "kind": 2,
         "importPath": "docker.app.scripts.predictor",
         "description": "docker.app.scripts.predictor",
-        "peekOfCode": "def get_default_prediction_model():\n    \"\"\"loading neural models for BAND\"\"\"\n    bonds_model = get_bonds_model()\n    bonds_model.load_weights('./weights/bond_weights.h5')\n    angles_model = get_angles_model()\n    angles_model.load_weights('./weights/angle_weights.h5')\n    nonbonds_model = get_nonbonds_model()\n    nonbonds_model.load_weights('./weights/nonbonds_weights.h5')\n    dihedralangles_model = get_dihedrals_model()\n    dihedralangles_model.load_weights('./weights/dihedral_weights.h5')",
+        "peekOfCode": "def get_default_prediction_model():\n    \"\"\"loading neural models for BAND\"\"\"\n    bonds_model = get_bonds_model()\n    bonds_model.load_weights('app/weights/bond_weights.h5')\n    angles_model = get_angles_model()\n    angles_model.load_weights('app/weights/angle_weights.h5')\n    nonbonds_model = get_nonbonds_model()\n    nonbonds_model.load_weights('app/weights/nonbonds_weights.h5')\n    dihedralangles_model = get_dihedrals_model()\n    dihedralangles_model.load_weights('app/weights/dihedral_weights.h5')",
         "detail": "docker.app.scripts.predictor",
         "documentation": {}
     },
@@ -795,7 +777,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_api",
         "description": "docker.app.testFiles.test_api",
-        "peekOfCode": "def test_root():\n    response = requests.get(base_url)\n    assert response.status_code == 200\n    assert response.json() == \"Hello World\"\ndef test_creator():\n    response = requests.get(base_url+\"/creator\")\n    assert response.status_code == 200\n    assert response.json() == \"Archit Jain & Pulkit Gupta\"\ndef test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)",
+        "peekOfCode": "def test_root():\n    \"\"\"test for root\"\"\"\n    response = requests.get(BASE_URL,timeout=3600)\n    assert response.status_code == 200\n    assert response.json() == \"Hello World\"\ndef test_creator():\n    \"\"\"test for creator\"\"\"\n    response = requests.get(BASE_URL+\"/creator\",timeout=3600)\n    assert response.status_code == 200\n    assert response.json() == {\"server\":\"Archit Jain & Pulkit Gupta\"}",
         "detail": "docker.app.testFiles.test_api",
         "documentation": {}
     },
@@ -804,7 +786,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_api",
         "description": "docker.app.testFiles.test_api",
-        "peekOfCode": "def test_creator():\n    response = requests.get(base_url+\"/creator\")\n    assert response.status_code == 200\n    assert response.json() == \"Archit Jain & Pulkit Gupta\"\ndef test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {",
+        "peekOfCode": "def test_creator():\n    \"\"\"test for creator\"\"\"\n    response = requests.get(BASE_URL+\"/creator\",timeout=3600)\n    assert response.status_code == 200\n    assert response.json() == {\"server\":\"Archit Jain & Pulkit Gupta\"}\ndef test_energy_prediction():\n    \"\"\"test for energy prediction\"\"\"\n    response = requests.post(BASE_URL+\"/predictEnergy\",json=mock_input,timeout=3600)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}",
         "detail": "docker.app.testFiles.test_api",
         "documentation": {}
     },
@@ -813,7 +795,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_api",
         "description": "docker.app.testFiles.test_api",
-        "peekOfCode": "def test_energy_prediction():\n    response = requests.post(base_url+\"/predictEnergy\",json=mock_input)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,",
+        "peekOfCode": "def test_energy_prediction():\n    \"\"\"test for energy prediction\"\"\"\n    response = requests.post(BASE_URL+\"/predictEnergy\",json=mock_input,timeout=3600)\n    assert response.status_code == 200\n    assert response.json() == {\"energy\": -712.6749267578125}\ndef test_geometry_optimization():\n    \"\"\"test for geometry optimization\"\"\"\n    output_data = {\n        \"optimized_coordinates\": [\n            [",
         "detail": "docker.app.testFiles.test_api",
         "documentation": {}
     },
@@ -822,7 +804,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_api",
         "description": "docker.app.testFiles.test_api",
-        "peekOfCode": "def test_geometry_optimization():\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,\n                0.0\n            ],\n            [\n                1.1985448415367228,",
+        "peekOfCode": "def test_geometry_optimization():\n    \"\"\"test for geometry optimization\"\"\"\n    output_data = {\n        \"optimized_coordinates\": [\n            [\n                0.0,\n                0.0,\n                0.0\n            ],\n            [",
         "detail": "docker.app.testFiles.test_api",
         "documentation": {}
     },
@@ -840,7 +822,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_files",
         "description": "docker.app.testFiles.test_files",
-        "peekOfCode": "def test_weight_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./trained_models/bond_model.h5\", \"./trained_models/angle_model.h5\", \"./trained_models/nonbonds_model.h5\", \"./trained_models/dihedrals_model.h5\"])\ndef test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\", \"./scripts/optimizer.py\", \"./scripts/featurizer.py\", \"./scripts/models.py\", \"./scripts/band.py\",\"./scripts/xyz_to_zmat.py\",\"./main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "peekOfCode": "def test_weight_file(file):\n    \"\"\"test for weight file\"\"\"\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./trained_models/bond_model.h5\",\n                                \"./trained_models/angle_model.h5\",\n                                \"./trained_models/nonbonds_model.h5\",\n                                \"./trained_models/dihedrals_model.h5\"])\ndef test_model_file(file):\n    \"\"\"test for model file\"\"\"\n    assert os.path.isfile(file)",
         "detail": "docker.app.testFiles.test_files",
         "documentation": {}
     },
@@ -849,7 +831,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_files",
         "description": "docker.app.testFiles.test_files",
-        "peekOfCode": "def test_model_file(file):\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\", \"./scripts/optimizer.py\", \"./scripts/featurizer.py\", \"./scripts/models.py\", \"./scripts/band.py\",\"./scripts/xyz_to_zmat.py\",\"./main.py\"])\ndef test_script_file(file):\n    assert os.path.isfile(file)",
+        "peekOfCode": "def test_model_file(file):\n    \"\"\"test for model file\"\"\"\n    assert os.path.isfile(file)\n@pytest.mark.parametrize(\"file\", [\"./scripts/predictor.py\",\n                                \"./scripts/optimizer.py\",\n                                \"./scripts/featurizer.py\",\n                                \"./scripts/models.py\",\n                                \"./scripts/band.py\",\n                                \"./scripts/xyz_to_zmat.py\",\n                                \"./main.py\"])",
         "detail": "docker.app.testFiles.test_files",
         "documentation": {}
     },
@@ -858,7 +840,7 @@
         "kind": 2,
         "importPath": "docker.app.testFiles.test_files",
         "description": "docker.app.testFiles.test_files",
-        "peekOfCode": "def test_script_file(file):\n    assert os.path.isfile(file)",
+        "peekOfCode": "def test_script_file(file):\n    \"\"\"test for script file\"\"\"\n    assert os.path.isfile(file)",
         "detail": "docker.app.testFiles.test_files",
         "documentation": {}
     },
@@ -867,7 +849,7 @@
         "kind": 6,
         "importPath": "docker.app.main",
         "description": "docker.app.main",
-        "peekOfCode": "class BANDInput(BaseModel):\n    species: list[str]\n    coordinates: list[list[float]]\n    bond_connectivity_list: list[list[int]]\n@app.get(\"/\")\ndef read_root():\n    return \"Hello World\"\n@app.get(\"/creator\") \ndef read_item():\n    return \"Archit Jain & Pulkit Gupta\"",
+        "peekOfCode": "class BANDInput(BaseModel):\n    \"\"\"Input format for BAND\"\"\"\n    species: List[str]\n    coordinates: List[List[float]]\n    bond_connectivity_list: List[List[int]]\n    def __init__(self, species, coordinates, bond_connectivity_list):\n        super().__init__(species=species, coordinates=coordinates,\n            bond_connectivity_list=bond_connectivity_list)\n        self.species = species\n        self.coordinates = coordinates",
         "detail": "docker.app.main",
         "documentation": {}
     },
@@ -876,7 +858,7 @@
         "kind": 2,
         "importPath": "docker.app.main",
         "description": "docker.app.main",
-        "peekOfCode": "def read_root():\n    return \"Hello World\"\n@app.get(\"/creator\") \ndef read_item():\n    return \"Archit Jain & Pulkit Gupta\"\n@app.post(\"/predictEnergy\")\ndef predictEnergy(data: BANDInput):\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometricOptimization(data: BANDInput):",
+        "peekOfCode": "def read_root():\n    \"\"\"root\"\"\"\n    return \"Hello World\"\n@app.get(\"/creator\")\ndef read_item():\n    \"\"\"This is a function to return the creator of the API\"\"\"\n    return {\"server\":\"Archit Jain & Pulkit Gupta\"}\n@app.post(\"/predictEnergy\")\ndef predict_energy(data: BANDInput):\n    \"\"\"predict_energy function\"\"\"",
         "detail": "docker.app.main",
         "documentation": {}
     },
@@ -885,25 +867,25 @@
         "kind": 2,
         "importPath": "docker.app.main",
         "description": "docker.app.main",
-        "peekOfCode": "def read_item():\n    return \"Archit Jain & Pulkit Gupta\"\n@app.post(\"/predictEnergy\")\ndef predictEnergy(data: BANDInput):\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometricOptimization(data: BANDInput):\n    return geometricOptimization_wrapper(data)",
+        "peekOfCode": "def read_item():\n    \"\"\"This is a function to return the creator of the API\"\"\"\n    return {\"server\":\"Archit Jain & Pulkit Gupta\"}\n@app.post(\"/predictEnergy\")\ndef predict_energy(data: BANDInput):\n    \"\"\"predict_energy function\"\"\"\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometric_optimization(data: BANDInput):\n    \"\"\"geometric_optimization function\"\"\"",
         "detail": "docker.app.main",
         "documentation": {}
     },
     {
-        "label": "predictEnergy",
+        "label": "predict_energy",
         "kind": 2,
         "importPath": "docker.app.main",
         "description": "docker.app.main",
-        "peekOfCode": "def predictEnergy(data: BANDInput):\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometricOptimization(data: BANDInput):\n    return geometricOptimization_wrapper(data)",
+        "peekOfCode": "def predict_energy(data: BANDInput):\n    \"\"\"predict_energy function\"\"\"\n    return predict_energy_wrapper(data)\n@app.post(\"/geometricOptimization\")\ndef geometric_optimization(data: BANDInput):\n    \"\"\"geometric_optimization function\"\"\"\n    return geometric_optimization_wrapper(data)",
         "detail": "docker.app.main",
         "documentation": {}
     },
     {
-        "label": "geometricOptimization",
+        "label": "geometric_optimization",
         "kind": 2,
         "importPath": "docker.app.main",
         "description": "docker.app.main",
-        "peekOfCode": "def geometricOptimization(data: BANDInput):\n    return geometricOptimization_wrapper(data)",
+        "peekOfCode": "def geometric_optimization(data: BANDInput):\n    \"\"\"geometric_optimization function\"\"\"\n    return geometric_optimization_wrapper(data)",
         "detail": "docker.app.main",
         "documentation": {}
     },
@@ -912,7 +894,7 @@
         "kind": 5,
         "importPath": "docker.app.main",
         "description": "docker.app.main",
-        "peekOfCode": "app = FastAPI()\nclass BANDInput(BaseModel):\n    species: list[str]\n    coordinates: list[list[float]]\n    bond_connectivity_list: list[list[int]]\n@app.get(\"/\")\ndef read_root():\n    return \"Hello World\"\n@app.get(\"/creator\") \ndef read_item():",
+        "peekOfCode": "app = FastAPI()\nclass BANDInput(BaseModel):\n    \"\"\"Input format for BAND\"\"\"\n    species: List[str]\n    coordinates: List[List[float]]\n    bond_connectivity_list: List[List[int]]\n    def __init__(self, species, coordinates, bond_connectivity_list):\n        super().__init__(species=species, coordinates=coordinates,\n            bond_connectivity_list=bond_connectivity_list)\n        self.species = species",
         "detail": "docker.app.main",
         "documentation": {}
     },

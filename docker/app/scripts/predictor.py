@@ -5,16 +5,16 @@ from .featurizer import get_features, np
 def get_default_prediction_model():
     """loading neural models for BAND"""
     bonds_model = get_bonds_model()
-    bonds_model.load_weights('./weights/bond_weights.h5')
+    bonds_model.load_weights('app/weights/bond_weights.h5')
 
     angles_model = get_angles_model()
-    angles_model.load_weights('./weights/angle_weights.h5')
+    angles_model.load_weights('app/weights/angle_weights.h5')
 
     nonbonds_model = get_nonbonds_model()
-    nonbonds_model.load_weights('./weights/nonbonds_weights.h5')
+    nonbonds_model.load_weights('app/weights/nonbonds_weights.h5')
 
     dihedralangles_model = get_dihedrals_model()
-    dihedralangles_model.load_weights('./weights/dihedral_weights.h5')
+    dihedralangles_model.load_weights('app/weights/dihedral_weights.h5')
 
     model = {}
     model['bonds'] = bonds_model
