@@ -1,11 +1,6 @@
 from faulthandler import disable
-from logging import PlaceHolder
-from urllib import response
 import streamlit as st
 import json
-import numpy as np
-import pandas as pd
-import streamlit.components.v1 as components
 import requests
 
 BASE_URL="http://127.0.0.1:8000/"
@@ -34,28 +29,17 @@ input_reference = {
     ]
 }
 
-def show_pdf(file_path):
-    # with open(file_path,"rb") as f:
-    #     base64_pdf = base64.b64encode(f.read()).decode('utf-8')
-    pdf_display = f'<iframe src="./info.pdf" width="800" height="800" type="application/pdf"></iframe>'
-    st.markdown(pdf_display, unsafe_allow_html=True)
-
-
 def no_page():
     '''
         404 page
     '''
     st.error("### Oops! 404")
 
-
-
 def explore_page():
     '''
         Explore page
     '''
-    st.write("""## Model Overview """)
-    show_pdf('info.pdf')
-    
+    st.write("""## Model Overview """)    
     st.write("""
             + api created by Archit Jain and Pulkit Gupta
     """)
@@ -129,20 +113,6 @@ st.sidebar.markdown("---")
 st.sidebar.markdown("""### Input Format Example""")
 st.sidebar.json(input_reference)
 # sidebar end
-
-# css start
-# styl = f"""
-#     <style>
-#         .e1tzin5v3{{
-#             border : 1px solid #11fa15;
-#             border-radius: 5px;
-#             padding: 1em;
-#         }}
-#     </style>
-#     """
-# st.markdown(styl, unsafe_allow_html=True)
-# css end
-
 
 st.title("BAND NN")
 if page == "Explore":
