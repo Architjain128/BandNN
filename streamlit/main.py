@@ -86,16 +86,15 @@ def show_geometric_optimization_page():
             if inp_data:
                 try:
                     inp_data=json.loads(inp_data)
-                    # response = requests.post(BASE_URL+"geometricOptimization", json=inp_data)
+                    response = requests.post(BASE_URL+"geometricOptimization", json=inp_data)
                     with placeHolder.container():
                         c1,c2=st.columns(2)
-                        
-                        c2.write('### Optimized Species:')
-                        # st.header(response.json()['optimized_species'])
-                        c2.header(13454655364.04)
                         c1.write('### Optimized Coordinates:')
-                        c1.json(input_reference)
-                        # st.json(response.json()['optimized_coordinates'])
+                        c1.json(response.json()['optimized_coordinates'])
+                        # c1.json(input_reference)
+                        c2.write('### Optimized Species:')
+                        c2.header(response.json()['optimized_species'])
+                        # c2.header(13454655364.04)
                 except:
                     placeHolder.error("OOPS something went wrong")
             else:
