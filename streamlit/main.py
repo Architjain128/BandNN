@@ -47,9 +47,6 @@ def explore_page():
     '''
     st.write("""## Model Overview """)
     displayPDF()
-    st.write("""
-            + api created by Archit Jain and Pulkit Gupta
-    """)
 
 def show_predict_energy_page():
     '''

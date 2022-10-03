@@ -1190,7 +1190,7 @@
         "kind": 2,
         "importPath": "streamlit.main",
         "description": "streamlit.main",
-        "peekOfCode": "def explore_page():\n    '''\n        Explore page\n    '''\n    st.write(\"\"\"## Model Overview \"\"\")\n    displayPDF()\n    st.write(\"\"\"\n            + api created by Archit Jain and Pulkit Gupta\n    \"\"\")\ndef show_predict_energy_page():",
+        "peekOfCode": "def explore_page():\n    '''\n        Explore page\n    '''\n    st.write(\"\"\"## Model Overview \"\"\")\n    displayPDF()\ndef show_predict_energy_page():\n    '''\n        Predict Energy page\n    '''",
         "detail": "streamlit.main",
         "documentation": {}
     },
