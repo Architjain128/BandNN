@@ -1,11 +1,10 @@
-"""FastAPI server"""
 from typing import List
 from fastapi import FastAPI
 from pydantic import BaseModel
-from app.scripts.band import predict_energy_wrapper, geometric_optimization_wrapper
+import uvicorn
+from band import predict_energy_wrapper, geometric_optimization_wrapper
 
 app = FastAPI()
-
 class BANDInput(BaseModel):
     """Input format for BAND"""
     species: List[str]
@@ -31,15 +30,10 @@ class BANDInput(BaseModel):
         """print band input bond connectivity list"""
         return f"bond_connectivity_list: {self.bond_connectivity_list}"
 
+
 @app.get("/")
 def read_root():
-    """root"""
-    return "Hello World"
-
-@app.get("/creator")
-def read_item():
-    """This is a function to return the creator of the API"""
-    return {"server":"Archit Jain & Pulkit Gupta"}
+    return {"Hello":"World"}
 
 @app.post("/predictEnergy")
 def predict_energy(data: BANDInput):
@@ -50,3 +44,6 @@ def predict_energy(data: BANDInput):
 def geometric_optimization(data: BANDInput):
     """geometric_optimization function"""
     return geometric_optimization_wrapper(data)
+
+# if __name__ == '__main__':
+uvicorn.run(app, port=8000, host="0.0.0.0")

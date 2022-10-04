@@ -1,7 +1,7 @@
 """This file is used for geometry optimization of a molecule"""
 import scipy.optimize as sop
-from .predictor import get_default_prediction_model, predict_energy
-from .xyz_to_zmat import get_zmat_from_coordinates, get_coordinates_from_zmat
+from predictor import get_default_prediction_model, predict_energy
+from xyz_to_zmat import get_zmat_from_coordinates, get_coordinates_from_zmat
 
 def optimize(coordinates,species,bonds):
     """optimization algorithm"""

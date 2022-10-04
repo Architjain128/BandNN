@@ -1,6 +1,6 @@
 """This file is used for predicting energy of a molecule"""
-from .models import get_angles_model, get_bonds_model, get_nonbonds_model, get_dihedrals_model
-from .featurizer import get_features, np
+from models import get_angles_model, get_bonds_model, get_nonbonds_model, get_dihedrals_model
+from featurizer import get_features, np
 
 def get_default_prediction_model():
     """loading neural models for BAND"""
