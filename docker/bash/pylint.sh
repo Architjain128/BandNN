@@ -2,12 +2,7 @@ cd ../app
 echo "Running pylint..."
 echo ""
 echo ""
-echo ">>>"
-echo "main.py"
-pylint main.py
-echo "<<<"
 echo ""
-cd ./scripts
 for filename in ./*.py; do
     if [ "$filename" != "./__init__.py" ]; then
         echo ">>>"
@@ -17,3 +12,4 @@ for filename in ./*.py; do
         echo ""
     fi
 done
+read varname

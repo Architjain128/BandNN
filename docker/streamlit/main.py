@@ -3,7 +3,7 @@ import streamlit as st
 import json
 import requests
 
-BASE_URL="http://localhost/"
+BACKEND_BASE_URL="http://localhost/"
 
 input_reference = {
     "species": ["C", "H", "H", "H", "C", "H", "H", "H"],
@@ -64,7 +64,7 @@ def show_predict_energy_page():
             if inp_data:
                 try:
                     inp_data=json.loads(inp_data)
-                    response = requests.post(BASE_URL+"predictEnergy", json=inp_data)
+                    response = requests.post(BACKEND_BASE_URL+"predictEnergy", json=inp_data)
                     with placeHolder.container():
                         st.write('### Predicted Energy')
                         st.header(response.json()['energy'])
@@ -90,7 +90,7 @@ def show_geometric_optimization_page():
             if inp_data:
                 try:
                     inp_data=json.loads(inp_data)
-                    response = requests.post(BASE_URL+"geometricOptimization", json=inp_data)
+                    response = requests.post(BACKEND_BASE_URL+"geometricOptimization", json=inp_data)
                     with placeHolder.container():
                         c1,c2=st.columns(2)
                         c1.write('### Optimized Coordinates:')

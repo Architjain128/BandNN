@@ -6,3 +6,4 @@ pylint==2.15.2
 keras==2.9.0
 tensorflow==2.9.2
 scipy==1.7.1
+streamlit==1.1.0

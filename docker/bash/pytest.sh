@@ -1,3 +1,7 @@
 cd ../app
-pytest
-pause
+echo "Running pytest..."
+echo ""
+
+pytest 
+echo ""
+read varname
